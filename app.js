@@ -8,48 +8,75 @@ GAME RULES:
 - The first player to reach 100 points on GLOBAL score wins the game
 
 */
-<<<<<<< HEAD
-var players, current, total, score0, score1, active;
+var players, RoundScore, total, active, gameActive, previousDice;
 players = [0, 1];
-total = [0, 0];
-current = [0, 0];
-score0 = document.getElementById('current-0');
-score1 = document.getElementById('current-1');
-active = 0;
-    
-=======
-var players, RoundScore, total, score0, score1, active;
-players = [0, 1];
+
+function init() {
 total = [0, 0];
 RoundScore = 0;
 active = 0;
+document.getElementById('score-0').innerHTML = 0;
+document.getElementById('score-1').innerHTML = 0;
+gameActive = true;
+document.querySelector('.player-0-panel').classList.add('active');
+document.querySelector('.player-0-panel').classList.remove('winner');
+document.querySelector('.player-1-panel').classList.remove('winner');
+document.getElementById('name-0').innerHTML = 'Player 1';
+document.getElementById('name-1').innerHTML = 'Player 2';
+}
+init();
 
-
->>>>>>> e5d084ba08ac475048d965de4d8fc9b3c2db413b
 document.querySelector('.btn-roll').addEventListener('click', function () {
-    var dice = Math.floor(Math.random() * 6) + 1;
-    var diceDOM = document.querySelector('.dice');   
-    diceDOM.style.display = 'block';
-    diceDOM.src = 'dice-' + dice + '.png';
-<<<<<<< HEAD
-    var pobierz = 'score' + active;
-    
-    if (dice !== 1){        
-        current[active] += dice;
-        pobierz.innerHTML = current[active];
-    }
-    else{ 
-        pobierz.innerHTML = 0; 
-        current[active] = 0;
-=======
-    if (dice !== 1) {        
-        RoundScore += dice;
-        document.getElementById('current-' + active).innerHTML = RoundScore;
->>>>>>> e5d084ba08ac475048d965de4d8fc9b3c2db413b
-    }
-    else{
-        RoundScore = 0;
-        document.getElementById('current-' + active).innerHTML = RoundScore;
-        active === 0 ? active = 1 : active = 0;
-    } 
+    if (gameActive){
+        var dice = Math.floor(Math.random() * 6) + 1;
+        var diceDOM = document.querySelector('.dice');   
+        diceDOM.style.display = 'block';
+        diceDOM.src = 'dice-' + dice + '.png';
+
+        if (dice !== 1) {
+            console.log(dice);
+            if (dice === previousDice){
+                document.getElementById('name-' + active).innerHTML = 'You loose! double' + dice;
+                document.querySelector('.player-' + active + '-panel').classList.add('winner');
+                document.querySelector('.player-0-panel').classList.remove('active');
+                document.querySelector('.player-1-panel').classList.remove('active');
+                document.querySelector('.dice').style.display = 'none';
+                gameActive = false;
+            }
+            else{
+                previousDice = dice; 
+                RoundScore += dice;
+                document.getElementById('current-' + active).innerHTML = RoundScore;
+                    }
+        }
+        else{
+            RoundScore = 0;
+            document.getElementById('current-' + active).innerHTML = RoundScore;
+            active === 0 ? active = 1 : active = 0;
+            document.querySelector('.player-0-panel').classList.toggle('active');
+            document.querySelector('.player-1-panel').classList.toggle('active');
+        }
+}
     })
+
+document.querySelector('.btn-hold').addEventListener('click', function () {
+    if (gameActive){
+        total[active] += RoundScore;
+        document.getElementById('score-' + active).innerHTML = total[active];
+        if (total[active] >= 20) {
+            document.getElementById('name-' + active).innerHTML = 'Winner!';
+            document.querySelector('.player-' + active + '-panel').classList.add('winner');
+            document.querySelector('.player-0-panel').classList.remove('active');
+            document.querySelector('.player-1-panel').classList.remove('active');
+            document.querySelector('.dice').style.display = 'none';
+            gameActive = false;
+        }
+        else {
+        RoundScore = 0;
+        active === 0 ? active = 1 : active = 0;
+            }
+        }
+})    
+document.querySelector('.btn-new').addEventListener('click', function () {
+    init();
+})
