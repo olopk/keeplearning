@@ -8,6 +8,7 @@ GAME RULES:
 - The first player to reach 100 points on GLOBAL score wins the game
 
 */
+<<<<<<< HEAD
 var players, current, total, score0, score1, active;
 players = [0, 1];
 total = [0, 0];
@@ -16,12 +17,21 @@ score0 = document.getElementById('current-0');
 score1 = document.getElementById('current-1');
 active = 0;
     
+=======
+var players, RoundScore, total, score0, score1, active;
+players = [0, 1];
+total = [0, 0];
+RoundScore = 0;
+active = 0;
+
+
+>>>>>>> e5d084ba08ac475048d965de4d8fc9b3c2db413b
 document.querySelector('.btn-roll').addEventListener('click', function () {
     var dice = Math.floor(Math.random() * 6) + 1;
-    var diceDOM = document.querySelector('.dice');    
-    
+    var diceDOM = document.querySelector('.dice');   
     diceDOM.style.display = 'block';
     diceDOM.src = 'dice-' + dice + '.png';
+<<<<<<< HEAD
     var pobierz = 'score' + active;
     
     if (dice !== 1){        
@@ -31,8 +41,15 @@ document.querySelector('.btn-roll').addEventListener('click', function () {
     else{ 
         pobierz.innerHTML = 0; 
         current[active] = 0;
+=======
+    if (dice !== 1) {        
+        RoundScore += dice;
+        document.getElementById('current-' + active).innerHTML = RoundScore;
+>>>>>>> e5d084ba08ac475048d965de4d8fc9b3c2db413b
     }
-    
-    
-    
-});
+    else{
+        RoundScore = 0;
+        document.getElementById('current-' + active).innerHTML = RoundScore;
+        active === 0 ? active = 1 : active = 0;
+    } 
+    })
