@@ -16,7 +16,7 @@
 }
 
 body {
-    background-image: linear-gradient(rgba(62, 20, 20, 0.4), rgba(62, 20, 20, 0.4)), url(back.jpg);
+    background-color: gray;
     background-size: cover;
     background-position: center;
     font-family: Lato;
@@ -141,13 +141,26 @@ i {
 .btn-roll { top: 403px;}
 .btn-hold { top: 467px;}
 
-.dice {
+.dice, .dice2 {
     position: absolute;
     left: 50%;
-    top: 178px;
+    top: 128px;
     transform: translateX(-50%);
     height: 100px;
     box-shadow: 0px 10px 60px rgba(0, 0, 0, 0.10);
+}
+
+.dice2 {
+    top: 248px;
+}
+
+.input {
+    position: absolute;
+    left: 45%;
+    top: 520px;
+    width: 100px;
+    display: block;
+    
 }
 
 .winner { background-color: #f7f7f7; }

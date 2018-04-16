@@ -8,7 +8,7 @@ GAME RULES:
 - The first player to reach 100 points on GLOBAL score wins the game
 
 */
-var players, RoundScore, total, active, gameActive, previousDice;
+var players, RoundScore, total, active, gameActive, previousDice, declaredScore;
 players = [0, 1];
 
 function init() {
@@ -29,25 +29,35 @@ init();
 document.querySelector('.btn-roll').addEventListener('click', function () {
     if (gameActive){
         var dice = Math.floor(Math.random() * 6) + 1;
-        var diceDOM = document.querySelector('.dice');   
+        var dice2 = Math.floor(Math.random() * 6) + 1;
+        var diceDOM = document.querySelector('.dice');
+        var dice2DOM = document.querySelector('.dice2');
+        
         diceDOM.style.display = 'block';
         diceDOM.src = 'dice-' + dice + '.png';
+        dice2DOM.src = 'dice-' + dice2 + '.png';
 
-        if (dice !== 1) {
-            console.log(dice);
+        if (dice !== 1 && dice2 !==1) {
+            /*console.log(dice);
             if (dice === previousDice){
+                /*
                 document.getElementById('name-' + active).innerHTML = 'You loose! double' + dice;
                 document.querySelector('.player-' + active + '-panel').classList.add('winner');
                 document.querySelector('.player-0-panel').classList.remove('active');
                 document.querySelector('.player-1-panel').classList.remove('active');
                 document.querySelector('.dice').style.display = 'none';
                 gameActive = false;
-            }
-            else{
-                previousDice = dice; 
-                RoundScore += dice;
+                RoundScore = 0;
                 document.getElementById('current-' + active).innerHTML = RoundScore;
-                    }
+                active === 0 ? active = 1 : active = 0;
+                document.querySelector('.player-0-panel').classList.toggle('active');
+                document.querySelector('.player-1-panel').classList.toggle('active');
+                }
+            else{
+                previousDice = dice; */ 
+                RoundScore += (dice + dice2);
+                document.getElementById('current-' + active).innerHTML = RoundScore;
+                    //}
         }
         else{
             RoundScore = 0;
@@ -63,7 +73,15 @@ document.querySelector('.btn-hold').addEventListener('click', function () {
     if (gameActive){
         total[active] += RoundScore;
         document.getElementById('score-' + active).innerHTML = total[active];
-        if (total[active] >= 20) {
+        declaredScore = document.getElementById('score-input').value;
+        if (declaredScore){
+            var finalScore = declaredScore;
+        }
+        else{
+            finalScore = 20;
+        }
+        
+        if (total[active] >= finalScore) {
             document.getElementById('name-' + active).innerHTML = 'Winner!';
             document.querySelector('.player-' + active + '-panel').classList.add('winner');
             document.querySelector('.player-0-panel').classList.remove('active');
